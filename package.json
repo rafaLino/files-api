@@ -1,0 +1,35 @@
+{
+	"name": "transactions-api",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./dist/server.mjs",
+	"types": "./dist/server.d.ts",
+	"scripts": {
+		"dev": "tsx watch --env-file=.env src/server.ts",
+		"start": "node --env-file=.env dist/server.js",
+		"check": "tsc --noEmit",
+		"build": "pkgroll --minify",
+		"lint": "biome ci ./src",
+		"lint:check": "biome check --write ./src"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "commonjs",
+	"dependencies": {
+		"@fastify/cors": "^11.1.0",
+		"@fastify/swagger": "^9.6.1",
+		"@scalar/fastify-api-reference": "^1.40.0",
+		"fastify": "^5.6.2",
+		"fastify-type-provider-zod": "^6.1.0",
+		"mongoose": "^9.0.0",
+		"zod": "^4.1.13"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.3.8",
+		"@types/node": "^24.10.1",
+		"pkgroll": "^2.21.4",
+		"tsx": "^4.20.6",
+		"typescript": "^5.9.3"
+	}
+}
