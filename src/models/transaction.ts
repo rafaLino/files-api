@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import type { IInstallment, IRecord, ITransaction } from '@/interfaces';
+import mongoose from 'mongoose'
+import type { IInstallment, IRecord, ITransaction } from '@/interfaces'
 
 const InstallmentSchema = new mongoose.Schema<IInstallment>(
 	{
@@ -7,7 +7,7 @@ const InstallmentSchema = new mongoose.Schema<IInstallment>(
 		total: { type: Number, required: true }
 	},
 	{ id: false }
-);
+)
 
 const RecordSchema = new mongoose.Schema<IRecord>(
 	{
@@ -17,7 +17,7 @@ const RecordSchema = new mongoose.Schema<IRecord>(
 		installments: InstallmentSchema
 	},
 	{ id: false }
-);
+)
 
 const TransactionSchema = new mongoose.Schema<ITransaction>(
 	{
@@ -25,10 +25,10 @@ const TransactionSchema = new mongoose.Schema<ITransaction>(
 		items: [RecordSchema]
 	},
 	{ id: false }
-);
+)
 
 TransactionSchema.virtual('total').get(function () {
-	return this.items.reduce((sum: number, item: IRecord) => sum + item.value, 0);
-});
+	return this.items.reduce((sum: number, item: IRecord) => sum + item.value, 0)
+})
 
-export const Transaction = mongoose.model('Transaction', TransactionSchema);
+export const Transaction = mongoose.model('Transaction', TransactionSchema)

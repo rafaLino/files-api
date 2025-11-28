@@ -1,15 +1,15 @@
 export interface ITransaction {
-	date: Date;
-	items: IRecord[];
+	date: Date
+	items: IRecord[]
 }
 
 export interface IInstallment {
-	current: number;
-	total: number;
+	current: number
+	total: number
 }
 export interface IRecord {
-	name: string;
-	value: number;
-	persist: boolean;
-	installments?: IInstallment;
+	name: string
+	value: number
+	persist: boolean
+	installments?: IInstallment
 }

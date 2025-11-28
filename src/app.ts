@@ -1,29 +1,29 @@
-import { fastifyCors } from '@fastify/cors';
-import { fastifySwagger } from '@fastify/swagger';
-import ScalarApiReference from '@scalar/fastify-api-reference';
-import { fastify } from 'fastify';
+import { fastifyCors } from '@fastify/cors'
+import { fastifySwagger } from '@fastify/swagger'
+import ScalarApiReference from '@scalar/fastify-api-reference'
+import { fastify } from 'fastify'
 import {
 	jsonSchemaTransform,
 	serializerCompiler,
 	validatorCompiler,
 	type ZodTypeProvider
-} from 'fastify-type-provider-zod';
-import { dbConnector } from './db/dbConnector';
-import { routes } from './routes';
+} from 'fastify-type-provider-zod'
+import { dbConnector } from './db/dbConnector'
+import { routes } from './routes'
 
 export async function buildApp() {
-	const app = fastify().withTypeProvider<ZodTypeProvider>();
+	const app = fastify().withTypeProvider<ZodTypeProvider>()
 
-	app.setValidatorCompiler(validatorCompiler);
-	app.setSerializerCompiler(serializerCompiler);
+	app.setValidatorCompiler(validatorCompiler)
+	app.setSerializerCompiler(serializerCompiler)
 
 	app.register(dbConnector, {
 		url: process.env.MONGODB_URI
-	});
+	})
 
 	app.register(fastifyCors, {
 		origin: '*'
-	});
+	})
 
 	app.register(fastifySwagger, {
 		openapi: {
@@ -33,15 +33,15 @@ export async function buildApp() {
 			}
 		},
 		transform: jsonSchemaTransform
-	});
+	})
 
 	app.register(ScalarApiReference, {
 		routePrefix: '/docs'
-	});
+	})
 
-	app.register(routes);
+	app.register(routes)
 
-	await app.ready();
+	await app.ready()
 
-	return app;
+	return app
 }

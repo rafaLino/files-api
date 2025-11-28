@@ -1,8 +1,8 @@
-import { UTCDate } from '@date-fns/utc';
-import { copyTransaction } from './helpers/copyTransaction';
-import { Transaction } from './models/transaction';
-import { BodySchema, DateParamSchema, IdParamSchema } from './schemas';
-import type { FastifyTypedInstance } from './types/fastify';
+import { UTCDate } from '@date-fns/utc'
+import { copyTransaction } from './helpers/copyTransaction'
+import { Transaction } from './models/transaction'
+import { BodySchema, DateParamSchema, IdParamSchema } from './schemas'
+import type { FastifyTypedInstance } from './types/fastify'
 
 export async function routes(app: FastifyTypedInstance) {
 	app.get(
@@ -14,13 +14,13 @@ export async function routes(app: FastifyTypedInstance) {
 			}
 		},
 		async (request, reply) => {
-			const date = new UTCDate(request.params.date);
+			const date = new UTCDate(request.params.date)
 			const transaction = await Transaction.findOne({
 				date: date.toString()
-			}).exec();
-			return reply.code(200).send(transaction?.toJSON({ virtuals: true }));
+			}).exec()
+			return reply.code(200).send(transaction?.toJSON({ virtuals: true }))
 		}
-	);
+	)
 
 	app.post(
 		'/transactions',
@@ -31,13 +31,13 @@ export async function routes(app: FastifyTypedInstance) {
 			}
 		},
 		async (request, reply) => {
-			const transaction = new Transaction(request.body);
+			const transaction = new Transaction(request.body)
 
-			await transaction.save();
+			await transaction.save()
 
-			return reply.code(201).send(transaction);
+			return reply.code(201).send(transaction)
 		}
-	);
+	)
 
 	app.put(
 		'/transactions/',
@@ -51,11 +51,11 @@ export async function routes(app: FastifyTypedInstance) {
 			await Transaction.findOneAndUpdate(
 				{ date: request.body.date },
 				request.body
-			);
+			)
 
-			return reply.code(204).send();
+			return reply.code(204).send()
 		}
-	);
+	)
 
 	app.delete(
 		'/transactions/',
@@ -66,11 +66,11 @@ export async function routes(app: FastifyTypedInstance) {
 			}
 		},
 		async (request, reply) => {
-			await Transaction.deleteOne({ _id: request.params.id }).exec();
+			await Transaction.deleteOne({ _id: request.params.id }).exec()
 
-			return reply.code(204).send();
+			return reply.code(204).send()
 		}
-	);
+	)
 
 	app.post(
 		'/transactions/next',
@@ -81,25 +81,25 @@ export async function routes(app: FastifyTypedInstance) {
 			}
 		},
 		async (request, reply) => {
-			const date = new UTCDate(request.body.date);
-			const existingTransaction = await Transaction.findOne({ date }).exec();
+			const date = new UTCDate(request.body.date)
+			const existingTransaction = await Transaction.findOne({ date }).exec()
 
 			if (!existingTransaction) {
 				return reply
 					.code(404)
-					.send({ message: 'Transaction not found for the given date.' });
+					.send({ message: 'Transaction not found for the given date.' })
 			}
 
 			const newTransaction = copyTransaction(
 				date,
 				existingTransaction.toObject()
-			);
+			)
 
-			const transaction = new Transaction(newTransaction);
+			const transaction = new Transaction(newTransaction)
 
-			await transaction.save();
+			await transaction.save()
 
-			return reply.code(201).send(transaction);
+			return reply.code(201).send(transaction)
 		}
-	);
+	)
 }

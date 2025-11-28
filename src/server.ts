@@ -1,16 +1,16 @@
-import { buildApp } from './app';
+import { buildApp } from './app'
 
 async function main() {
-	const app = await buildApp();
+	const app = await buildApp()
 	app
 		.listen({
 			port: 3333,
 			host: '0.0.0.0'
 		})
 		.then(() => {
-			console.log('HTTP server running on http://localhost:3333');
-			console.log('HTTP server running on http://localhost:3333/docs');
-		});
+			console.log('HTTP server running on http://localhost:3333')
+			console.log('HTTP server running on http://localhost:3333/docs')
+		})
 }
 
-main();
+main()

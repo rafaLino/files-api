@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const BodySchema = z.object({
 	date: z.iso.date(),
@@ -15,12 +15,12 @@ export const BodySchema = z.object({
 				.optional()
 		})
 	)
-});
+})
 
 export const DateParamSchema = z.object({
 	date: z.string()
-});
+})
 
 export const IdParamSchema = z.object({
 	id: z.string()
-});
+})
