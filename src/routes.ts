@@ -1,3 +1,4 @@
+import { UTCDate } from '@date-fns/utc';
 import { copyTransaction } from './helpers/copyTransaction';
 import { Transaction } from './models/transaction';
 import { BodySchema, DateParamSchema, IdParamSchema } from './schemas';
@@ -13,9 +14,10 @@ export async function routes(app: FastifyTypedInstance) {
 			}
 		},
 		async (request, reply) => {
-			const date = new Date(request.params.date);
-			const transaction = await Transaction.findOne({ date }).exec();
-
+			const date = new UTCDate(request.params.date);
+			const transaction = await Transaction.findOne({
+				date: date.toString()
+			}).exec();
 			return reply.code(200).send(transaction?.toJSON({ virtuals: true }));
 		}
 	);
@@ -79,7 +81,7 @@ export async function routes(app: FastifyTypedInstance) {
 			}
 		},
 		async (request, reply) => {
-			const date = new Date(request.body.date);
+			const date = new UTCDate(request.body.date);
 			const existingTransaction = await Transaction.findOne({ date }).exec();
 
 			if (!existingTransaction) {
