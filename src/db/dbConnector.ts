@@ -9,7 +9,7 @@ export async function dbConnector(
 	try {
 		if (!options.url) {
 			fastify.log.error(`MongoDB connection error: MONGODB_URI is not defined`);
-			process.exit(1);
+			throw new Error(`MongoDB connection error: MONGODB_URI is not defined`);
 		}
 		await mongoose.connect(options.url);
 		fastify.log.info('MongoDB connected');
@@ -17,6 +17,7 @@ export async function dbConnector(
 	} catch (err) {
 		const errorMessage = err instanceof Error ? err.message : String(err);
 		fastify.log.error(`MongoDB connection error: ${errorMessage}`);
-		process.exit(1);
+
+		throw err;
 	}
 }

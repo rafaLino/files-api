@@ -1,7 +1,7 @@
 import { buildApp } from './app';
 
-function main() {
-	const app = buildApp();
+async function main() {
+	const app = await buildApp();
 	app
 		.listen({
 			port: 3333,

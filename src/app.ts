@@ -11,7 +11,7 @@ import {
 import { dbConnector } from './db/dbConnector';
 import { routes } from './routes';
 
-export function buildApp() {
+export async function buildApp() {
 	const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 	app.setValidatorCompiler(validatorCompiler);
@@ -40,6 +40,8 @@ export function buildApp() {
 	});
 
 	app.register(routes);
+
+	await app.ready();
 
 	return app;
 }
