@@ -44,8 +44,8 @@ describe('GET Tests', () => {
         t.expect(returnedItem.persist).toEqual(false);
         t.expect(returnedItem.installments).toBeUndefined();
 
-        t.onTestFinished(() => {
-            clearCollection();
+        t.onTestFinished(async () => {
+            await clearCollection();
             app.close();
         });
     });
