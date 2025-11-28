@@ -15,9 +15,7 @@ export async function routes(app: FastifyTypedInstance) {
 		},
 		async (request, reply) => {
 			const date = new UTCDate(request.params.date)
-			const transaction = await Transaction.findOne({
-				date: date.toString()
-			}).exec()
+			const transaction = await Transaction.findOne({ date }).exec()
 			return reply.code(200).send(transaction?.toJSON({ virtuals: true }))
 		}
 	)

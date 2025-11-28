@@ -1,7 +1,7 @@
 import { UTCDate } from '@date-fns/utc'
 import { describe, test } from 'vitest'
 import { buildApp } from '@/app'
-import { clearCollection, seed } from '@/config/test.helper'
+import { clearCollection, parseBody, seed } from '@/config/test.helper'
 import type { ITransaction } from '@/interfaces'
 
 describe('GET Tests', () => {
@@ -27,7 +27,7 @@ describe('GET Tests', () => {
 		t.expect(response.statusCode).toBe(200)
 
 		t.expect(response.body).toBeDefined()
-		const result = parseBody(response.body)
+		const result = parseBody<{ total: number }>(response.body)
 
 		t.expect(result.date).toBeDefined()
 		t.expect(result.total).toBeDefined()
@@ -64,9 +64,19 @@ describe('GET Tests', () => {
 
 		t.onTestFinished(() => app.close())
 	})
-})
 
-//utils
-function parseBody(body: string): ITransaction & { total: number } {
-	return JSON.parse(body)
-}
+	test('should return internal error given a bad date', async (t) => {
+		const app = await buildApp()
+
+		const response = await app.inject({
+			method: 'GET',
+			url: '/transactions/something-weird'
+		})
+
+		console.log(response.body)
+
+		t.expect(response.statusCode).toBe(500)
+
+		t.onTestFinished(() => app.close())
+	})
+})
