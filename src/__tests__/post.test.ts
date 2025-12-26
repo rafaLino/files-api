@@ -6,7 +6,7 @@ import {
 	parseError,
 	seed
 } from '@/config/test.helper'
-import { TFileRef } from '@/models/fileRef'
+import type { TFileRef } from '@/models/fileRef'
 
 test('should create a file successfully', async (t) => {
 	const app = await buildApp()

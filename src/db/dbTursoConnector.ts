@@ -1,6 +1,6 @@
+import { createClient } from '@libsql/client'
 import type { FastifyInstance } from 'fastify'
 import { fastifyPlugin } from 'fastify-plugin'
-import { createClient } from '@libsql/client'
 
 export default fastifyPlugin(async function dbConnector(
 	fastify: FastifyInstance,

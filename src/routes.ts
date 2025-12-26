@@ -1,9 +1,9 @@
+import type { Client } from '@libsql/client'
 import { GetErrorMessage } from './helpers/getErrorMessage'
 import { FileRef } from './models/fileRef'
 import { SQL } from './repository/queries'
 import type { FastifyTypedInstance } from './types/fastify'
 import { HttpStatusCode } from './types/httpStatusCode'
-import { Client, LibsqlError } from '@libsql/client'
 
 export async function routes(app: FastifyTypedInstance) {
 	app.get(

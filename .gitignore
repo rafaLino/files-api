@@ -140,3 +140,4 @@ sqlite.db-changes
 sqlite.db-info
 sqlite.db-wal
 sqlite.db-wal-revert
+sqlite.db-journal

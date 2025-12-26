@@ -1,6 +1,6 @@
+import { type Client, createClient } from '@libsql/client'
 import type { TFileRef } from '@/models/fileRef'
 import { SQL } from '@/repository/queries'
-import { Client, createClient } from '@libsql/client'
 
 declare global {
 	var dbConnection: Client
@@ -16,11 +16,10 @@ async function createConnection() {
 	globalThis.dbConnection ??= createClient({
 		url: process.env.DB_URI
 	})
-
-	await createTable()
 }
 
-async function createTable() {
+export async function createTable() {
+	await createConnection()
 	return globalThis.dbConnection.execute(`
 		CREATE TABLE IF NOT EXISTS files (
 			ref TEXT PRIMARY KEY,
