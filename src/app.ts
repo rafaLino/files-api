@@ -29,7 +29,8 @@ export async function buildApp() {
 	app.register(fastifyMultipart)
 
 	app.register(fastifyCors, {
-		origin: process.env.ALLOWED_ORIGIN?.split(',')
+		origin: process.env.ALLOWED_ORIGIN?.split(','),
+		methods: ['GET', 'POST', 'DELETE', 'OPTIONS']
 	})
 
 	app.register(fastifySwagger, {
