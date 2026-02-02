@@ -1,7 +1,7 @@
 import { UTCDate } from '@date-fns/utc'
 import { z } from 'zod'
 
-export const RefDateSchema = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/)
+export const RefDateSchema = z.string().regex(/^\d{4}-([1-9]|[01]\d|1[0-2])$/)
 export type TYearMonth = z.infer<typeof RefDateSchema>
 
 export class RefDate {
@@ -39,5 +39,9 @@ export class RefDate {
 
 	toISOString() {
 		return this.date.toISOString()
+	}
+
+	isValid() {
+		return RefDateSchema.safeParse(this.toString()).success
 	}
 }
